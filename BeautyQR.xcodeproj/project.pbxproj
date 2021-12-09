@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B57E2362762B335003852CF /* EFQRCode in Frameworks */ = {isa = PBXBuildFile; productRef = 3B57E2352762B335003852CF /* EFQRCode */; };
 		3B68D2182762821600215D7F /* BeautyQRApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B68D2172762821600215D7F /* BeautyQRApp.swift */; };
 		3B68D21A2762821600215D7F /* MainScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B68D2192762821600215D7F /* MainScreen.swift */; };
 		3B68D21C2762821800215D7F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3B68D21B2762821800215D7F /* Assets.xcassets */; };
@@ -30,6 +31,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B57E2362762B335003852CF /* EFQRCode in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,6 +99,9 @@
 			dependencies = (
 			);
 			name = BeautyQR;
+			packageProductDependencies = (
+				3B57E2352762B335003852CF /* EFQRCode */,
+			);
 			productName = BeautyQR;
 			productReference = 3B68D2142762821600215D7F /* BeautyQR.app */;
 			productType = "com.apple.product-type.application";
@@ -125,6 +130,9 @@
 				Base,
 			);
 			mainGroup = 3B68D20B2762821600215D7F;
+			packageReferences = (
+				3B57E2342762B335003852CF /* XCRemoteSwiftPackageReference "EFQRCode" */,
+			);
 			productRefGroup = 3B68D2152762821600215D7F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -357,6 +365,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3B57E2342762B335003852CF /* XCRemoteSwiftPackageReference "EFQRCode" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/EFPrefix/EFQRCode";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3B57E2352762B335003852CF /* EFQRCode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3B57E2342762B335003852CF /* XCRemoteSwiftPackageReference "EFQRCode" */;
+			productName = EFQRCode;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3B68D20C2762821600215D7F /* Project object */;
 }
