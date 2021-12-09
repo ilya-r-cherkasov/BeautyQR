@@ -51,6 +51,11 @@
 			<key>orderHint</key>
 			<integer>10</integer>
 		</dict>
+		<key>QRWidgetSwiftUIExtension.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>13</integer>
+		</dict>
 		<key>README (Playground) 1.xcscheme</key>
 		<dict>
 			<key>isShown</key>

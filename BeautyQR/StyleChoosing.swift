@@ -7,6 +7,7 @@
 
 import SwiftUI
 import EFQRCode
+import WidgetKit
 
 struct StyleChoosing: View {
     
@@ -40,6 +41,12 @@ struct StyleChoosing: View {
             watermark: UIImage(named: "Cat")?.cgImage
         ) {
             print("Create QRCode image success \(image)")
+            if let pngRepresentation = UIImage(cgImage: image).pngData(),
+               let userDefaults = UserDefaults(suiteName: "group.qrCodeSuite") {
+                userDefaults.set(pngRepresentation, forKey: "qrcode")
+                userDefaults.synchronize()
+                WidgetCenter.shared.reloadAllTimelines()
+            }
             return UIImage(cgImage: image)
         } else {
             print("Create QRCode image failed!")
