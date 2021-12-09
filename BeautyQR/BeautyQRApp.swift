@@ -11,7 +11,7 @@ import SwiftUI
 struct BeautyQRApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainScreen()
         }
     }
 }
