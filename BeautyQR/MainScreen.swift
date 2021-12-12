@@ -16,18 +16,33 @@ struct MainScreen: View {
     var body: some View {
         NavigationView {
             VStack {
-                Text("QR-код всегда под рукой!")
-                    .bold()
-                Text("Просто добавьте картинку с кодом из галереи или отсканируйте камерой")
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(.gray)
-                Button("Выбрать из галереи") {
-                    isShowingPhotoPicker = true
+                VStack {
+                    Text("QR-код всегда под рукой!")
+                        .bold()
+                    Text("Просто добавьте картинку с кодом из галереи или отсканируйте камерой")
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(.gray)
                 }
-                .padding(15)
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(20)
+                .frame(maxHeight: .infinity, alignment: .bottom)
+                HStack {
+                    Button("Выбрать из галереи") {
+                        isShowingPhotoPicker = true
+                    }
+                    .padding()
+                    .frame(height: 56)
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(20)
+                    Button {
+                        
+                    } label: {
+                        Image("QRCode")
+                    }
+                    .frame(width: 56, height: 56)
+                    .background(Color(red: 230 / 255, green: 242 / 255, blue: 1))
+                    .cornerRadius(20)
+                }
+                .frame(maxHeight: .infinity, alignment: .bottom)
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("BeatyQR") // ломает лэйаут
