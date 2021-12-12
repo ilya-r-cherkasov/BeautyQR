@@ -11,9 +11,9 @@ import WidgetKit
 
 struct StyleChoosing: View {
     
-    @Binding var sourceImage: UIImage
     var spacing: CGFloat = 15.0
     var trailingSpace: CGFloat = 150
+    @Binding var sourceImage: UIImage
     @GestureState var offset: CGFloat = 0
     @State var currentIndex: Int = 0
     @State var imageList = [UIImage]()
@@ -56,14 +56,8 @@ struct StyleChoosing: View {
                     )
                 }
                 .animation(.easeInOut, value: offset == 0)
-                .onAppear {
-                    for num in 1...6 {
-                        let image = generate(for: recognize().first ?? "", placeholer: "placeholder\(num)")
-                        imageList.append(image)
-                    }
-                }
                 Button("Готово") {
-                    
+                    saveImageAndRefreshWidget(imageList[currentIndex])
                 }
                 .frame(maxWidth: .infinity, minHeight: 56)
                 .background(Color.blue)
@@ -71,8 +65,13 @@ struct StyleChoosing: View {
                 .cornerRadius(20)
                 .padding()
             }
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle("Выбор стиля")
+        }
+        .navigationBarTitle(Text("Выбор стиля"), displayMode: .inline)
+        .onAppear {
+            for num in 1...6 {
+                let image = generate(for: recognize().first ?? "", placeholer: "placeholder\(num)")
+                imageList.append(image)
+            }
         }
     }
     
@@ -119,16 +118,19 @@ struct StyleChoosing: View {
             watermark: UIImage(named: placeholer)?.cgImage
         ) {
             print("Create QRCode image success \(image)")
-            if let pngRepresentation = UIImage(cgImage: image).pngData(),
-               let userDefaults = UserDefaults(suiteName: "group.qrCodeSuite") {
-                userDefaults.set(pngRepresentation, forKey: "qrcode")
-                userDefaults.synchronize()
-                WidgetCenter.shared.reloadAllTimelines()
-            }
             return UIImage(cgImage: image)
         } else {
             print("Create QRCode image failed!")
             return UIImage()
+        }
+    }
+    
+    func saveImageAndRefreshWidget(_ image: UIImage) {
+        if let pngRepresentation = image.pngData(),
+           let userDefaults = UserDefaults(suiteName: "group.qrCodeSuite") {
+            userDefaults.set(pngRepresentation, forKey: "qrcode")
+            userDefaults.synchronize()
+            WidgetCenter.shared.reloadAllTimelines()
         }
     }
     
