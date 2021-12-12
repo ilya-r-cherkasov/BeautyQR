@@ -135,7 +135,6 @@
 			children = (
 				3B57E2532762BA60003852CF /* BeautyQRRelease.entitlements */,
 				3B57E2522762BA48003852CF /* BeautyQR.entitlements */,
-				3B68D2252762881200215D7F /* Extensions */,
 				3B68D2172762821600215D7F /* BeautyQRApp.swift */,
 				3B68D2192762821600215D7F /* MainScreen.swift */,
 				3B68D22827629D2500215D7F /* StyleChoosing.swift */,
@@ -152,13 +151,6 @@
 				3B68D21E2762821800215D7F /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		3B68D2252762881200215D7F /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

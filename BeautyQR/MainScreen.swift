@@ -43,6 +43,9 @@ struct MainScreen: View {
                 }
                 .frame(maxHeight: .infinity, alignment: .bottom)
                 .padding()
+                NavigationLink(isActive: $isPhotoReady) {
+                    StyleChoosing(sourceImage: $sourceImage)
+                } label: {}
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("BeatyQR") // ломает лэйаут
@@ -50,9 +53,6 @@ struct MainScreen: View {
                 PhotoPicker(sourceImage: $sourceImage) { success in
                     isPhotoReady = success
                 }
-            }
-            .fullScreenCover(isPresented: $isPhotoReady) {
-                StyleChoosing(sourceImage: $sourceImage)
             }
         }
         .navigationViewStyle(StackNavigationViewStyle()) // чинит лэйаут
