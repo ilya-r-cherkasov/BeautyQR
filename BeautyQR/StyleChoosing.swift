@@ -20,46 +20,59 @@ struct StyleChoosing: View {
     
     var body: some View {
         NavigationView {
-            GeometryReader { proxy in
-                let width = proxy.size.width - (trailingSpace - spacing)
-                let adjustMentWidth = (trailingSpace / 2) - spacing
-                HStack(spacing: spacing){
-                    ForEach(imageList, id: \.self) { image in
-                        GeometryReader { proxy in
-                            let scale = getScale(proxy: proxy)
-                            Image(uiImage: image)
-                                .resizable()
-                                .scaleEffect(scale)
+            VStack {
+                GeometryReader { proxy in
+                    let width = proxy.size.width - (trailingSpace - spacing)
+                    let adjustMentWidth = (trailingSpace / 2) - spacing
+                    HStack(spacing: spacing){
+                        ForEach(imageList, id: \.self) { image in
+                            GeometryReader { proxy in
+                                let scale = getScale(proxy: proxy)
+                                Image(uiImage: image)
+                                    .resizable()
+                                    .scaleEffect(scale)
+                            }
+                            .padding()
+                            .frame(
+                                width: max(proxy.size.width - trailingSpace, 0),
+                                height: max(proxy.size.width - trailingSpace, 0)
+                            )
                         }
-                        .padding()
-                        .frame(
-                            width: max(proxy.size.width - trailingSpace, 0),
-                            height: max(proxy.size.width - trailingSpace, 0)
-                        )
+                    }
+                    .frame(maxHeight: .infinity, alignment: .center)
+                    .padding(.horizontal, spacing)
+                    .offset(x: (CGFloat(currentIndex) * -width) + adjustMentWidth + offset)
+                    .gesture(
+                        DragGesture()
+                            .updating($offset, body: { value, out, _ in
+                                out = value.translation.width
+                            })
+                            .onEnded({ value in
+                                let offsetX = value.translation.width
+                                let progress = -offsetX / width
+                                let roundIndex = progress.rounded()
+                                currentIndex = max(min(currentIndex + Int(roundIndex), 5), 0)
+                            })
+                    )
+                }
+                .animation(.easeInOut, value: offset == 0)
+                .onAppear {
+                    for num in 1...6 {
+                        let image = generate(for: recognize().first ?? "", placeholer: "placeholder\(num)")
+                        imageList.append(image)
                     }
                 }
-                .padding(.horizontal, spacing)
-                .offset(x: (CGFloat(currentIndex) * -width) + adjustMentWidth + offset)
-                .gesture(
-                    DragGesture()
-                        .updating($offset, body: { value, out, _ in
-                            out = value.translation.width
-                        })
-                        .onEnded({ value in
-                            let offsetX = value.translation.width
-                            let progress = -offsetX / width
-                            let roundIndex = progress.rounded()
-                            currentIndex = max(min(currentIndex + Int(roundIndex), 5), 0)
-                        })
-                )
-            }
-            .animation(.easeInOut, value: offset == 0)
-            .onAppear {
-                for num in 1...6 {
-                    let image = generate(for: recognize().first ?? "", placeholer: "placeholder\(num)")
-                    imageList.append(image)
+                Button("Готово") {
+                    
                 }
+                .frame(maxWidth: .infinity, minHeight: 56)
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(20)
+                .padding()
             }
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("Выбор стиля")
         }
     }
     

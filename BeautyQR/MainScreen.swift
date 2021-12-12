@@ -28,8 +28,7 @@ struct MainScreen: View {
                     Button("Выбрать из галереи") {
                         isShowingPhotoPicker = true
                     }
-                    .padding()
-                    .frame(height: 56)
+                    .frame(maxWidth: .infinity, minHeight: 56)
                     .background(Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(20)
@@ -43,6 +42,7 @@ struct MainScreen: View {
                     .cornerRadius(20)
                 }
                 .frame(maxHeight: .infinity, alignment: .bottom)
+                .padding()
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("BeatyQR") // ломает лэйаут
