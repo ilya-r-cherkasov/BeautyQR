@@ -50,18 +50,18 @@ struct MainScreen: View {
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("BeatyQR") // ломает лэйаут
-            .sheet(isPresented: $isShowingPhotoPicker) {
-                PhotoPicker(sourceImage: $sourceImage, sourceType: .photoLibrary) { success in
-                    isPhotoReady = success
-                }
-            }
-            .sheet(isPresented: $isShowingCamera) {
-                PhotoPicker(sourceImage: $sourceImage, sourceType: .camera) { success in
-                    isPhotoReady = success
-                }
-            }
         }
         .navigationViewStyle(StackNavigationViewStyle()) // чинит лэйаут
+        .sheet(isPresented: $isShowingPhotoPicker) {
+            PhotoPicker(sourceImage: $sourceImage, sourceType: .photoLibrary) { success in
+                isPhotoReady = success
+            }
+        }
+        .sheet(isPresented: $isShowingCamera) {
+            PhotoPicker(sourceImage: $sourceImage, sourceType: .camera) { success in
+                isPhotoReady = success
+            }
+        }
     }
 }
 

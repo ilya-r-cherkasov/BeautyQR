@@ -16,7 +16,8 @@ struct StyleChoosing: View {
     @Binding var sourceImage: UIImage
     @GestureState var offset: CGFloat = 0
     @State var currentIndex: Int = 0
-    @State var imageList = [UIImage()]
+    @State var imageList = [UIImage]()
+    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         NavigationView {
@@ -51,11 +52,13 @@ struct StyleChoosing: View {
                                 let offsetX = value.translation.width
                                 let progress = -offsetX / width
                                 let roundIndex = progress.rounded()
-                                currentIndex = max(min(currentIndex + Int(roundIndex), 5), 0)
+                                currentIndex = max(min(currentIndex + Int(roundIndex), imageList.count - 1), 0)
                             })
                     )
                 }
                 .animation(.easeInOut, value: offset == 0)
+                .cornerRadius(20)
+                .shadow(radius: 5)
                 Button("Готово") {
                     saveImageAndRefreshWidget(imageList[currentIndex])
                 }
@@ -67,7 +70,16 @@ struct StyleChoosing: View {
             }
         }
         .navigationBarTitle(Text("Выбор стиля"), displayMode: .inline)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading:
+                                Button(action: {
+            presentationMode.wrappedValue.dismiss()
+        }) {
+            Image("arrow")
+        })
         .onAppear {
+            let image = generate(for: recognize().first ?? "")
+            imageList.append(image)
             for num in 1...6 {
                 let image = generate(for: recognize().first ?? "", placeholer: "placeholder\(num)")
                 imageList.append(image)
@@ -112,10 +124,10 @@ struct StyleChoosing: View {
         return []
     }
 
-    func generate(for url: String, placeholer: String) -> UIImage {
+    func generate(for text: String, placeholer: String = "") -> UIImage {
         if let image = EFQRCode.generate(
-            for: url,
-            watermark: UIImage(named: placeholer)?.cgImage
+            for: text,
+            watermark: !placeholer.isEmpty ? UIImage(named: placeholer)?.cgImage : nil
         ) {
             print("Create QRCode image success \(image)")
             return UIImage(cgImage: image)
