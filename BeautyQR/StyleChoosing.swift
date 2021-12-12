@@ -16,7 +16,7 @@ struct StyleChoosing: View {
     @Binding var sourceImage: UIImage
     @GestureState var offset: CGFloat = 0
     @State var currentIndex: Int = 0
-    @State var imageList = [UIImage]()
+    @State var imageList = [UIImage()]
     
     var body: some View {
         NavigationView {

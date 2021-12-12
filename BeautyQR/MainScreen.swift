@@ -10,6 +10,7 @@ import SwiftUI
 struct MainScreen: View {
     
     @State private var isShowingPhotoPicker = false
+    @State private var isShowingCamera = false
     @State private var isPhotoReady = false
     @State private var sourceImage = UIImage()
     
@@ -33,7 +34,7 @@ struct MainScreen: View {
                     .foregroundColor(.white)
                     .cornerRadius(20)
                     Button {
-                        
+                        isShowingCamera = true
                     } label: {
                         Image("QRCode")
                     }
@@ -50,7 +51,12 @@ struct MainScreen: View {
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("BeatyQR") // ломает лэйаут
             .sheet(isPresented: $isShowingPhotoPicker) {
-                PhotoPicker(sourceImage: $sourceImage) { success in
+                PhotoPicker(sourceImage: $sourceImage, sourceType: .photoLibrary) { success in
+                    isPhotoReady = success
+                }
+            }
+            .sheet(isPresented: $isShowingCamera) {
+                PhotoPicker(sourceImage: $sourceImage, sourceType: .camera) { success in
                     isPhotoReady = success
                 }
             }
